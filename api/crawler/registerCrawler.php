@@ -1,6 +1,5 @@
 <?php
 namespace api\crawler;
-use api\crawler\DiAwareInterface;
 
 class registerCrawler{
     /**
@@ -33,13 +32,6 @@ class registerCrawler{
         }
         if(is_object($definition)){
             $instance=call_user_func($definition);//通过这个函数使用闭包函数
-        }
-
-        // 如果实现了DiAwareInterface这个接口，自动注入
-        if (is_object($instance)) {
-            if ($instance instanceof DiAwareInterface) {
-                $instance->setDi($instance);//究竟是用$this做参数还是用$instance做参数？
-            }
         }
         return $instance;
     }
