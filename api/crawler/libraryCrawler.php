@@ -1,8 +1,8 @@
 <?php
 namespace api\crawler;
-use api\crawler\DiAwareInterface;
+use api\crawler\BaseCrawler;
 
-class libraryCrawler implements DiAwareInterface{
+class libraryCrawler extends BaseCrawler{
     
 }
 ?>

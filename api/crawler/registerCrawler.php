@@ -18,7 +18,7 @@ class registerCrawler{
     static::$register[$name]=$definition;
     }
     /**
-     * 获取实例&自动注入
+     * 获取实例/闭包
      * 
      * @param string
      * @return instance
@@ -33,7 +33,8 @@ class registerCrawler{
         if(is_object($definition)){
             $instance=call_user_func($definition);//通过这个函数使用闭包函数
         }
-        return $instance;
+        if(is_instance($instance))return $instance;//返回实例或闭包
+        else return $definition;
     }
 }
 ?>
