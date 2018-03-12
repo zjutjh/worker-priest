@@ -2,7 +2,7 @@
 namespace api\crawler;
 use api\crawler\BaseCrawler;
 
-class zfCrawler extends BaseCrawler{
-
+class roomCrawler extends BaseCrawler{
+    
 }
 ?>
