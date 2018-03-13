@@ -1,5 +1,6 @@
 <?php
 namespace api\crawler;
+use api\crawler\registerCrawler;
 
 class BaseCrawler{
     /**
@@ -46,14 +47,14 @@ class BaseCrawler{
     /**
      * 基础的登录函数
      * 
-     * @param ~
+     * @param mixed
      * @return void
      */
-    function baselogin($viewstate,$event,$username,$password,$code){
+    function baselogin($viewstate,$event,$username,$password,$code,$url){
         $body="__LASTFOCUS="."&__VIEWSTATE=$viewstate"."&__EVENTTARGET="."&__EVENTARGUMENT="."&__EVENTVALIDATION=$event"."&UserLogin%3AtxtUser=$username"."&UserLogin%3AtxtPwd=$password"."&UserLogin%3AddlPerson=%BF%A8%BB%A7"."&UserLogin%3AtxtSure=$code"."&UserLogin%3AImageButton1.x=0"."&UserLogin%3AImageButton1.y=0";
         $post=$body;
         $this->ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://172.16.7.100/default.aspx");
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);//用于访问https站点
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);//同上
@@ -63,12 +64,18 @@ class BaseCrawler{
     }
     /**
      * 数据抓取函数
+     * 传入的闭包返回array，第一个值放的是注册的闭包（抓取逻辑）名字
+     * 剩下的依次是爬取逻辑需要的变量，注意其顺序要和注册的闭包的参数顺序一致
      * 
      * @param closure
-     * @return mixed
+     * @return array
      */
     function grab($param){
-        
+        $array=call_user_func($param);//功能函数返回的数组
+        $di=new registerCrawler;
+        $definition=$di->get($array[0]);//已经注册的爬取逻辑
+        array_shift($array);//这个函数删去传入数组的首值，并返回被删掉的那个函数
+        return call_user_func_array($definition,$array);
     }
 }
 ?>
