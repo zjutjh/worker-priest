@@ -90,12 +90,17 @@ class BaseCrawler{
      * @param closure
      * @return array
      */
-    public function baseGrab($param){
-        $array=call_user_func($param);//功能函数返回的数组
+    //public function baseGrab($param){
+    //    $array=call_user_func($param);//功能函数返回的数组
+    //    $di=new registerCrawler;
+    //    $definition=$di->get($array[0]);//已经注册的爬取逻辑
+    //    array_shift($array);//这个函数删去传入数组的首值，并返回被删掉的那个函数
+    //    return call_user_func_array($definition,$array);
+    //}
+    public function baseGrab($string,$array){
         $di=new registerCrawler;
-        $definition=$di->get($array[0]);//已经注册的爬取逻辑
-        array_shift($array);//这个函数删去传入数组的首值，并返回被删掉的那个函数
-        return call_user_func_array($definition,$array);
+        $instance=$di->get($string);
+        $instance->grab($array);
     }
 }
 ?>
