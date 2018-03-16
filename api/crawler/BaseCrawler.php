@@ -10,12 +10,38 @@ class BaseCrawler{
      */
     protected $ch;
     /**
-     * 模拟get请求，请求数据
+     * ioc容器
      * 
-     * @param instance
+     * @var instance
+     */
+    protected $__di;
+    /**
+     * 构造函数
+     * 
+     * @param void
      * @return void
      */
-    function get(){
+    function __construct(){
+        $this->__di=new registerCrawler;
+    }
+    /**
+     * 注入函数
+     * 
+     * @param array
+     * @return void
+     */
+    public function setDi(Array $array){
+        foreach($array as $key=>$definition){
+            $this->__di->set($key,$definition);
+        }
+    }
+    /**
+     * 模拟get请求，请求数据
+     * 
+     * @param void
+     * @return void
+     */
+    public function get(){
         header('Access-Control-Allow-Origin:*',
         'Content-Type:application/json;charset=UTF-8');//api json文件
         $header[] = "Expect:";
@@ -30,10 +56,10 @@ class BaseCrawler{
     /**
      * 模拟post请求，请求数据
      * 
-     * @param instance,string
+     * @param string
      * @return void
      */
-    function post($url){
+    public function post($url){
         header('Access-Control-Allow-Origin:*',
         'Content-Type:application/json;charset=UTF-8');//api json文件
         $this->ch = curl_init();
@@ -46,21 +72,15 @@ class BaseCrawler{
     }
     /**
      * 基础的登录函数
+     * 传入的
      * 
-     * @param mixed
-     * @return void
+     * @param string
+     * @return array
      */
-    function baselogin($viewstate,$event,$username,$password,$code,$url){
-        $body="__LASTFOCUS="."&__VIEWSTATE=$viewstate"."&__EVENTTARGET="."&__EVENTARGUMENT="."&__EVENTVALIDATION=$event"."&UserLogin%3AtxtUser=$username"."&UserLogin%3AtxtPwd=$password"."&UserLogin%3AddlPerson=%BF%A8%BB%A7"."&UserLogin%3AtxtSure=$code"."&UserLogin%3AImageButton1.x=0"."&UserLogin%3AImageButton1.y=0";
-        $post=$body;
-        $this->ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);//用于访问https站点
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);//同上
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-        curl_setopt($ch,CURLOPT_COOKIE,$cookie);//使用cookie
+    public function baseLogin($string,$array){
+        $di=new registerCrawler;
+        $instance=$di->get($string);
+        $instance->login($array);
     }
     /**
      * 数据抓取函数
@@ -70,7 +90,7 @@ class BaseCrawler{
      * @param closure
      * @return array
      */
-    function grab($param){
+    public function baseGrab($param){
         $array=call_user_func($param);//功能函数返回的数组
         $di=new registerCrawler;
         $definition=$di->get($array[0]);//已经注册的爬取逻辑
