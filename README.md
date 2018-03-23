@@ -1,4 +1,5 @@
 # api-recreate
+![](https://github.com/zjutjh/worker-preist/raw/master/api/resource/worker-preist.jpg) 
 >api重构
 >
 
