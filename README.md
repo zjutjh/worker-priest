@@ -1,8 +1,8 @@
-# worker-preist
+# worker-priest
 ![](https://github.com/zjutjh/worker-preist/raw/master/api/resource/worker-preist.jpg) 
 
 >~纯属是因为看到其他项目帅气的项目名才改了项目的名字~<br/>
->worker-preist意旨工蚁，我们的项目是一个可以依赖的蚁群，在实现高并发的前提下，为用户提供极致的查询体验<br/>
+>worker-priest意旨工蚁，我们的项目是一个可以依赖的蚁群，在实现高并发的前提下，为用户提供极致的查询体验<br/>
 >一个致力于为微精弘提供更优更佳服务的爬虫程序
 >
 
