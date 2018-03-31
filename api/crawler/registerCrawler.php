@@ -7,7 +7,7 @@ class registerCrawler{
      * 
      * @var array
      */
-    protected static $register=array();
+    static public $register=array();
     /**
      * 注册函数
      * 
@@ -16,8 +16,8 @@ class registerCrawler{
      * @param string,closure
      * @return void
      */
-    public static function set($name,Closure $definition){
-    static::$register[$name]=$definition;
+    public function set($name,Closure $definition){
+        self::$register[$name]=$definition;
     }
     /**
      * 获取实例/闭包
@@ -27,11 +27,11 @@ class registerCrawler{
      * @return instance
      */
     public function get($name){
-        if (isset(static::$register[$name])){ 
-            $definition = static::$register[$name];
+        if (isset(self::$register[$name])){ 
+            $definition = self::$register[$name];
         }
         else{
-            throw new Exception("Service '" . name . "' wasn't found in the dependency injection container'");
+            throw new Exception("Service '" . $name . "' wasn't found in the dependency injection container'");
         }
         if(is_object($instance=call_user_func($definition))){
             return $instance;//通过这个函数使用闭包函数
