@@ -255,7 +255,7 @@ class libraryCrawler extends BaseCrawler implements CrawlerInterface{
         return $result;
     }
     /**
-     *借书逻辑  
+     *借书逻辑
      */
     public function borrow_action($post_field, $action)
     {
@@ -330,8 +330,8 @@ class libraryCrawler extends BaseCrawler implements CrawlerInterface{
         //}
         //else 
         switch($array[0]){
-            case "book_grab":book_grab();break;
-            case "book_borrow":book_borrow();break;
+            case "book_grab":return book_grab();break;
+            case "book_borrow":return book_borrow();break;
             default:throw new Exception("the function '".$array[0]."' hasn't been defined in this scope");
         }
     }
