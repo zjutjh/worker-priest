@@ -10,7 +10,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://files.phpcomposer.com/files/noahbuscher/macaw/cf4dd15893f97539f3f91bb296e04324fbbb379e.zip",
+            "url": "https://api.github.com/repos/noahbuscher/macaw/zipball/cf4dd15893f97539f3f91bb296e04324fbbb379e",
             "reference": "cf4dd15893f97539f3f91bb296e04324fbbb379e",
             "shasum": ""
         },
@@ -21,7 +21,7 @@
             "guzzle/guzzle": "~3.9",
             "phpunit/phpunit": "^4.8-stable"
         },
-        "time": "2018-01-09T05:51:33+00:00",
+        "time": "2018-01-09 05:51:33",
         "type": "library",
         "installation-source": "source",
         "autoload": {

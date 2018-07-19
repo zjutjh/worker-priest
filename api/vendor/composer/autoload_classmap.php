@@ -6,11 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'CrawlerInterFace' => $baseDir . '/crawler/CrawlerInterface.php',
     'api\\crawler\\BaseCrawler' => $baseDir . '/crawler/BaseCrawler.php',
-    'api\\crawler\\cardCrawler' => $baseDir . '/crawler/cardCrawler.php',
     'api\\crawler\\libraryCrawler' => $baseDir . '/crawler/libraryCrawler.php',
     'api\\crawler\\registerCrawler' => $baseDir . '/crawler/registerCrawler.php',
-    'api\\crawler\\ycCrawler' => $baseDir . '/crawler/ycCrawler.php',
-    'api\\crawler\\zfCrawler' => $baseDir . '/crawler/zfCrawler.php',
 );

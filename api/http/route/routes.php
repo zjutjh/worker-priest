@@ -2,15 +2,15 @@
 
 use NoahBuscher\Macaw\Macaw;
 
-Macaw::get('/',function(){
+Macaw::get('/index.php/',function(){
     echo "成功！";
 });
 
-Macaw::get('/test',function(){
+Macaw::get('/index.php/test',function(){
     echo "成功！";
 });
 
-Macaw::get('/funk',function(){
+Macaw::get('/index.php/hello',function(){
     echo "yooooo";
 });
 

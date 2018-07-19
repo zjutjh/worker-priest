@@ -4,6 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+    "hash": "33fed1690151ec019f810bf854fd4883",
     "content-hash": "4c157512afd1add46a31a68e7f41f617",
     "packages": [
         {
@@ -16,7 +17,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/noahbuscher/macaw/cf4dd15893f97539f3f91bb296e04324fbbb379e.zip",
+                "url": "https://api.github.com/repos/noahbuscher/macaw/zipball/cf4dd15893f97539f3f91bb296e04324fbbb379e",
                 "reference": "cf4dd15893f97539f3f91bb296e04324fbbb379e",
                 "shasum": ""
             },
@@ -51,7 +52,7 @@
                 "php-router",
                 "router"
             ],
-            "time": "2018-01-09T05:51:33+00:00"
+            "time": "2018-01-09 05:51:33"
         }
     ],
     "packages-dev": [],
