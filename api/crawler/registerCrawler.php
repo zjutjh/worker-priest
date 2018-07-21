@@ -16,7 +16,7 @@ class registerCrawler{
      * @param string,closure
      * @return void
      */
-    public function set($name,Closure $definition){
+    public function set($name,$definition){
         self::$register[$name]=$definition;
     }
     /**

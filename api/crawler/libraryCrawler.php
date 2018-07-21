@@ -4,7 +4,7 @@ use api\crawler\BaseCrawler;
 use api\crawler\registerCrawler;
 use api\crawler\CrawlerInterface;
 
-class libraryCrawler extends BaseCrawler implements CrawlerInterface{
+class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
     ///**
     // * 临时容器
     // * 

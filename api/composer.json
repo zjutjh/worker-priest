@@ -5,7 +5,9 @@
     "autoload":{
         "classmap": [
             "crawler",
-            "http/route"
-        ]
+            "http/route",
+	    "http/controller"
+        ],
+	"files": ["http/helper/register.php"]
     }
 }
