@@ -14,5 +14,8 @@ Macaw::get('/index.php/hello',function(){
     echo "yooooo";
 });
 
+Macaw::get('/swoole',function(){
+    echo "swoole Macaw\n";
+});
 Macaw::dispatch();
 ?>
