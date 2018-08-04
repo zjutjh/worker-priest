@@ -13,10 +13,10 @@ use api\crawler\zfCrawler;
 //$z=new zfCrawler;
 
 $array=[
-    "cardCrawler"=>new cardCrawler,
-    "libraryCrawler"=>new libraryCrawler,
-    "ycCrawler"=>new ycCrawler,
-    "zfCrawler"=>new zfCrawler
+    "cardCrawler"=>new cardCrawler(),
+    "libraryCrawler"=>new libraryCrawler(),
+    "ycCrawler"=>new ycCrawler(),
+    "zfCrawler"=>new zfCrawler()
 ];
 //基类
 $base=new BaseCrawler;
