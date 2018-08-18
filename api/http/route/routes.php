@@ -34,7 +34,9 @@ $http->on('request',function($request,$response){
     var_dump($request->get,$request->post);
     $response->header("Content-Type","text/html;charset=utf-8");
     //$response->end(registerCrawler::$register['libraryCrawler']->data($data,'http://210.32.205.60/login.aspx'));
-    $response->end("swooleTEST");
+    //$response->end(registerCrawler::$register['libraryCrawler']->login(201706060615,201706060615));
+     //$response->end("swooleTEST");
+    
 });
 //Macaw::dispatch();
 ?>

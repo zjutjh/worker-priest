@@ -61,7 +61,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
      * 
      * 
      */
-    public function data( &$data,$url,$fun="get"){//data是否应该传入引用
+    public function data( $data,$url,$fun="get"){//data是否应该传入引用
         global $cookie_file,$ctr_cookie;
         //定义请求头
         $browser = array(
@@ -149,7 +149,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         }
         else
         {
-            $contents = data('get',null,$url);
+            $contents = $this->data(null,$url,'get');
         }
         //var_dump($contents);
         //$post_field_name=array("__VIEWSTATE","__EVENTTARGET","__EVENTARGUMENT","__VIEWSTATEGENERATOR","__VIEWSTATEENCRYPTED","__EVENTVALIDATION");
@@ -179,7 +179,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         exit;
     }
     $id = $_REQUEST['id'];
-    $result=data('get',null,'http://210.32.205.60/Book.aspx?id='.$id);
+    $result=$this->data('get',null,'http://210.32.205.60/Book.aspx?id='.$id);
     $class = array();
     //<table style="border-style: none;
     $preg = '/<table cellspacing="0" cellpadding="0" border="0" [\w\W]*?>([\w\W]*?)<\/table>/';
@@ -250,7 +250,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         $post_field['ImageButton1.x']='35';
         $post_field['ImageButton1.y']='15';
 
-        $result = $this->data(post_data($post_field,$url,null,array("__VIEWSTATE","__VIEWSTATEGENERATOR","__EVENTVALIDATION")),$url,'post');
+        $result = $this->data($this->post_data($post_field,$url,null,array("__VIEWSTATE","__VIEWSTATEGENERATOR","__EVENTVALIDATION")),$url,'post');
         $ctr_cookie = 1;
         return $result;
     }
