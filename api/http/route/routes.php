@@ -3,7 +3,7 @@
 use api\crawler\registerCrawler;
 use NoahBuscher\Macaw\Macaw;
 
-Macaw::get('/index.php/',function(){
+/*Macaw::get('/index.php/',function(){
     echo "成功！";
 });
 
@@ -29,9 +29,15 @@ Macaw::get('/index.php/libraryTEST/data/(:any)',function($Str){
 
 Macaw::get('/swoole',function(){
     echo "swoole Macaw\n";
-});
+});*/
 $http->on('request',function($request,$response){
     var_dump($request->get,$request->post);
+    if($request->get!=null){
+        $_REQUEST=$request->get;
+    }
+    else if($request->post!=null){
+        $_REQUEST=$request->post;
+    }
     $response->header("Content-Type","text/html;charset=utf-8");
     //$response->end(registerCrawler::$register['libraryCrawler']->data($data,'http://210.32.205.60/login.aspx'));
     //$response->end(registerCrawler::$register['libraryCrawler']->login(201706060615,201706060615));
