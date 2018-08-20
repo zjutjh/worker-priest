@@ -276,8 +276,91 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         }
         $post_field['__EVENTTARGET']='ctl00$ContentPlaceHolder1$GridView1';
 
-        $result = data('post',$post_field,$url);
+        $result = $this->data($post_field,$url,'post');
         return $result;
+    }
+    /**
+     * 除借书信息外的一些基础信息
+     * info_action函数
+     */
+    public function info_action($class)
+    {
+        $url = "http://210.32.205.60/Default.aspx";
+        $result = $this->data(null,$url);
+
+        if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_LBnowborrow[\w\W]*?>([\w\W]*?)<\/span>/', $result, $arr)!=0){
+            $class['borrow_num'] = trim($arr[1][0]);
+        }
+
+        if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_LBcq[\w\W]*?>([\w\W]*?)<\/span>/', $result, $arr)!=0){
+            $class['overdue'] = trim($arr[1][0]);
+        }
+
+        if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_LBqk[\w\W]*?>([\w\W]*?)<\/span>/', $result, $arr)!=0){
+            $class['debet'] = trim($arr[1][0]);
+        }
+
+        return $class;
+    }
+    /**
+     * 将粗糙的前端页面匹配为可用的数据
+     * fix_result函数
+     */
+    function fix_result($result, $fix_ajax = false)
+    {
+        if(preg_match_all("/Object moved to/", $result, $temp)!=0) {
+            echo json_encode( array('status'=>'error','msg'=>'用户名或密码错误'));
+            @unlink ($cookie_file);
+            exit;
+        }
+
+        if(preg_match_all('/pic\/NextPage\.png/', $result, $arr)!=0){
+            $class['has_next'] = true;
+        }
+
+        if(preg_match_all('/pic\/PrePage\.png/', $result, $arr)!=0){
+            $class['has_pre'] = true;
+        }
+        
+        $class['borrow_list'] = array();
+
+        if(preg_match_all('/<table 
+                                    style="border-style: none;[\w\W]*?>([\w\W]*?)                                <\/table>/', $result, $arr)!=0){//若抓到数据
+            //var_dump($arr);
+            foreach ($arr[1] as $key => $value) {
+                if(preg_match_all('/<a id="ctl00_ContentPlaceHolder1_GridView1[\w\W]*?href="Book.aspx\?id=([\d]*?)"[\w\W]*?>([\w\W]*?)<\/a>/', $value, $temp)!=0) {
+                    $borrow['bookid'] = $temp[1][0];
+                    $borrow['title'] = $temp[2][0];
+                }
+                if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_GridView1[\w\W]*?>([\w\W]*?)<\/span>/', $value, $temp)!=0) {
+                    // var_dump($temp);
+                    $borrow['collection_code'] = $temp[1][0];
+                    $borrow['collection_address'] = $temp[1][1];
+                    $borrow['borrow_date'] = $temp[1][2];
+                    $borrow['return_date'] = $temp[1][3];
+                    $borrow['renew'] = $temp[1][4];
+                    $borrow['status'] = $temp[1][5];
+                    $class['borrow_list'][] = $borrow;
+                }
+            }
+        }
+        if($fix_ajax)
+        {
+            $post_field = array();
+            if(preg_match_all('/\d+\|hiddenField\|([\w\W]*?)\|([\w\W]*?)\|/', $result, $t))
+            {
+                foreach ($t[1] as $key => $value) {
+                    $post_field[$value] = $t[2][$key];
+                }
+            }
+            $class['session'] = $post_field;
+        }
+        else
+        {
+            $class['session'] = post_data(array(),null,$result,array("__VIEWSTATE","__LASTFOCUS","__VIEWSTATEGENERATOR","__EVENTVALIDATION","__VIEWSTATEENCRYPTED"));
+        }
+
+        return $class;
     }
     /**
      * book_borrow函数
@@ -296,21 +379,21 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             //如果有翻页操作
             if(isset($_REQUEST['action']) && $_REQUEST['action'] && isset($_REQUEST['session']) && $_REQUEST['session'])
             {
-                $class = fix_result($this->borrow_action($_REQUEST['session'], $_REQUEST['action']), true);
+                $class = $this->fix_result($this->borrow_action($_REQUEST['session'], $_REQUEST['action']), true);
             }
             else
             {
-                $result =$this-> data(null,'http://210.32.205.60/Borrowing.aspx');
-                $class = fix_result($result);
+                $result = $this->data(null,'http://210.32.205.60/Borrowing.aspx');
+                $class = $this->fix_result($result);
             }
-            $class = info_action($class);
+            $class = $this->info_action($class);
             //echo ($result);
         }
         if(isset($class['borrow_num'])){//若抓到数据
-            echo json_encode( array('status'=>'success','msg'=>$class));
+            return json_encode( array('status'=>'success','msg'=>$class));
         }
         else {//若没有抓到数据
-            echo json_encode( array('status'=>'success','msg'=>'没有相关信息'));
+            return json_encode( array('status'=>'success','msg'=>'没有相关信息'));
         }
         @unlink ($cookie_file);
     }
