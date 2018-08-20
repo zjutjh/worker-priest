@@ -127,7 +127,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         $httpCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);  //判断是否成功登陆
         if($httpCode == 0)
         {
-            echo json_encode( array('status'=>'error','msg'=>'服务器错误'));
+            return json_encode( array('status'=>'error','msg'=>'服务器错误'));
             exit;
         }
         curl_close($ch);
@@ -175,7 +175,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
     public function book_grab(){
         if(!isset($_REQUEST['id']) || !$_REQUEST['id'])
     {
-        echo json_encode( array('status'=>'error','msg'=>'请输入书本id'));
+        return json_encode( array('status'=>'error','msg'=>'请输入书本id'));
         exit;
     }
     $id = $_REQUEST['id'];
@@ -309,8 +309,9 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
     function fix_result($result, $fix_ajax = false)
     {
         if(preg_match_all("/Object moved to/", $result, $temp)!=0) {
-            echo json_encode( array('status'=>'error','msg'=>'用户名或密码错误'));
             @unlink ($cookie_file);
+	    return json_encode( array('status'=>'error','msg'=>'用户名或密码错误'));
+            //@unlink ($cookie_file);
             exit;
         }
 
@@ -369,7 +370,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         if(!isset($_REQUEST['username']) || !$_REQUEST['password'])
         {
             @unlink ($cookie_file);
-            echo json_encode( array('status'=>'error','msg'=>'参数错误'));
+            return json_encode( array('status'=>'error','msg'=>'参数错误'));
             exit;
         }
         //查询成功，下面开始正则抓取
