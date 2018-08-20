@@ -179,7 +179,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         exit;
     }
     $id = $_REQUEST['id'];
-    $result=$this->data('get',null,'http://210.32.205.60/Book.aspx?id='.$id);
+    $result=$this->data(null,'http://210.32.205.60/Book.aspx?id='.$id);
     $class = array();
     //<table style="border-style: none;
     $preg = '/<table cellspacing="0" cellpadding="0" border="0" [\w\W]*?>([\w\W]*?)<\/table>/';
@@ -223,15 +223,16 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             }
         }
     }
+    @unlink ($cookie_file);
     if($class) {//若抓到数据
-        echo json_encode( array('status'=>'success','msg'=>$class));
+        return json_encode( array('status'=>'success','msg'=>$class));
     }
     else {
-        echo json_encode( array('status'=>'error','msg'=>'没有相关信息'));
+        return json_encode( array('status'=>'error','msg'=>'没有相关信息'));
     }
 
 
-    @unlink ($cookie_file);
+    //@unlink ($cookie_file);
     }
     /**
      * 图书馆登录函数
@@ -291,15 +292,15 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         //查询成功，下面开始正则抓取
         //开始正则抓取表格数据
         $class = array();
-        if(login($_REQUEST['username'], $_REQUEST['password'])){//登陆成功
+        if($this->login($_REQUEST['username'], $_REQUEST['password'])){//登陆成功
             //如果有翻页操作
             if(isset($_REQUEST['action']) && $_REQUEST['action'] && isset($_REQUEST['session']) && $_REQUEST['session'])
             {
-                $class = fix_result(borrow_action($_REQUEST['session'], $_REQUEST['action']), true);
+                $class = fix_result($this->borrow_action($_REQUEST['session'], $_REQUEST['action']), true);
             }
             else
             {
-                $result = data('get',null,'http://210.32.205.60/Borrowing.aspx');
+                $result =$this-> data(null,'http://210.32.205.60/Borrowing.aspx');
                 $class = fix_result($result);
             }
             $class = info_action($class);
