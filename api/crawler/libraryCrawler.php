@@ -182,7 +182,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
      * book查询
      * 
      */
-    public function book_grab(){
+    public function library_book(){
         if(!isset($_REQUEST['id']) || !$_REQUEST['id'])
     {
         return json_encode( array('status'=>'error','msg'=>'请输入书本id'));
@@ -268,6 +268,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         }
         $result = $this->data($post_data,$url,'post',$url);
         $ctr_cookie = 1;
+        echo $result;
         return $result;
     }
     /**
