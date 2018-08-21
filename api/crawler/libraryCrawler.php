@@ -175,7 +175,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             else
                 $post_field[$name]=$matches[1];//$matches下标为0位存放的是原字符串
         }
-        // var_dump($post_field);
+        var_dump($post_field);
         return $post_field;
     }
     /**
@@ -262,7 +262,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         $post_field['DropDownList1']='0';
         $post_field['ImageButton1.x']='35';
         $post_field['ImageButton1.y']='15';
-        $post_data=$this->post_data($past_field,$url,null,array("__VIEWSTATE","__VIEWSTATEGENERATOR","__EVENTVALIDATION"));
+        $post_data=$this->post_data($post_field,$url,null,array("__VIEWSTATE","__VIEWSTATEGENERATOR","__EVENTVALIDATION"));
         if(!$this->is_not_json($post_data)){//检查是否报错
             return $post_data;
         }
