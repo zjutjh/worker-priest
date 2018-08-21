@@ -68,7 +68,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
      * 
      * 
      */
-    public function data( $data,$url,$fun="get"){//data是否应该传入引用
+    public function data( $data,$url,$fun="get",$referer="http://210.32.205.60"){//data是否应该传入引用
         global $cookie_file,$ctr_cookie;
         //定义请求头
         $browser = array(
@@ -96,7 +96,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0 );
-        curl_setopt($ch, CURLOPT_REFERER, "http://210.32.205.60");
+        curl_setopt($ch, CURLOPT_REFERER, $referer);
         $http_header = array();
         foreach ($browser as $key => $value) {
             $http_header[] = "{$key}: {$value}";
@@ -266,7 +266,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         if(!$this->is_not_json($post_data)){//检查是否报错
             return $post_data;
         }
-        $result = $this->data($post_data,$url,'post');
+        $result = $this->data($post_data,$url,'post',$url);
         $ctr_cookie = 1;
         return $result;
     }
