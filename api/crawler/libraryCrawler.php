@@ -55,7 +55,14 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
     //    }
     //}
     
-    
+
+    /**
+     * 判断是不是json数据，用于在报错时及时返回json报错信息
+     * 并结束程序
+     */
+    public function is_not_json($str){
+        return is_null(json_decode($str));
+    }
     /**
      * 共用的数据获取函数
      * 
@@ -151,6 +158,9 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         {
             $contents = $this->data(null,$url,'get');
         }
+        if(!$this->is_not_json($contents)){//检查是否报错
+            return $contents;
+        }
         //var_dump($contents);
         //$post_field_name=array("__VIEWSTATE","__EVENTTARGET","__EVENTARGUMENT","__VIEWSTATEGENERATOR","__VIEWSTATEENCRYPTED","__EVENTVALIDATION");
 
@@ -180,6 +190,9 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
     }
     $id = $_REQUEST['id'];
     $result=$this->data(null,'http://210.32.205.60/Book.aspx?id='.$id);
+    if(!$this->is_not_json($result)){//检查是否报错
+        return $result;
+    }
     $class = array();
     //<table style="border-style: none;
     $preg = '/<table cellspacing="0" cellpadding="0" border="0" [\w\W]*?>([\w\W]*?)<\/table>/';
@@ -231,7 +244,6 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         return json_encode( array('status'=>'error','msg'=>'没有相关信息'));
     }
 
-
     //@unlink ($cookie_file);
     }
     /**
@@ -250,8 +262,11 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         $post_field['DropDownList1']='0';
         $post_field['ImageButton1.x']='35';
         $post_field['ImageButton1.y']='15';
-
-        $result = $this->data($this->post_data($post_field,$url,null,array("__VIEWSTATE","__VIEWSTATEGENERATOR","__EVENTVALIDATION")),$url,'post');
+        $post_data=$this->post_data($past_field,$url,null,array("__VIEWSTATE","__VIEWSTATEGENERATOR","__EVENTVALIDATION"));
+        if(!$this->is_not_json($post_data)){//检查是否报错
+            return $post_data;
+        }
+        $result = $this->data($post_data,$url,'post');
         $ctr_cookie = 1;
         return $result;
     }
@@ -287,7 +302,9 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
     {
         $url = "http://210.32.205.60/Default.aspx";
         $result = $this->data(null,$url);
-
+        if(!$this->is_not_json($result)){//检查是否报错
+            return $result;
+        }
         if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_LBnowborrow[\w\W]*?>([\w\W]*?)<\/span>/', $result, $arr)!=0){
             $class['borrow_num'] = trim($arr[1][0]);
         }
@@ -310,7 +327,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
     {
         if(preg_match_all("/Object moved to/", $result, $temp)!=0) {
             @unlink ($cookie_file);
-	    return json_encode( array('status'=>'error','msg'=>'用户名或密码错误'));
+	        return json_encode( array('status'=>'error','msg'=>'用户名或密码错误'));
             //@unlink ($cookie_file);
             exit;
         }
@@ -325,8 +342,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         
         $class['borrow_list'] = array();
 
-        if(preg_match_all('/<table 
-                                    style="border-style: none;[\w\W]*?>([\w\W]*?)                                <\/table>/', $result, $arr)!=0){//若抓到数据
+        if(preg_match_all('/<table\s*style="border-style: none;[\w\W]*?>([\w\W]*?)\s*<\/table>/', $result, $arr)!=0){//若抓到数据
             //var_dump($arr);
             foreach ($arr[1] as $key => $value) {
                 if(preg_match_all('/<a id="ctl00_ContentPlaceHolder1_GridView1[\w\W]*?href="Book.aspx\?id=([\d]*?)"[\w\W]*?>([\w\W]*?)<\/a>/', $value, $temp)!=0) {
@@ -357,8 +373,11 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             $class['session'] = $post_field;
         }
         else
-        {
-            $class['session'] = post_data(array(),null,$result,array("__VIEWSTATE","__LASTFOCUS","__VIEWSTATEGENERATOR","__EVENTVALIDATION","__VIEWSTATEENCRYPTED"));
+        {   $post_data = $this->post_data(array(),null,$result,array("__VIEWSTATE","__LASTFOCUS","__VIEWSTATEGENERATOR","__EVENTVALIDATION","__VIEWSTATEENCRYPTED"));
+            if(!$this->is_not_json($post_data)){//检查是否报错
+                return $post_data;
+            }
+            $class['session'] =$post_data;
         }
 
         return $class;
@@ -381,13 +400,25 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             if(isset($_REQUEST['action']) && $_REQUEST['action'] && isset($_REQUEST['session']) && $_REQUEST['session'])
             {
                 $class = $this->fix_result($this->borrow_action($_REQUEST['session'], $_REQUEST['action']), true);
+                if(!$this->is_not_json($class)){//检查是否报错
+                    return $class;
+                }
             }
             else
             {
                 $result = $this->data(null,'http://210.32.205.60/Borrowing.aspx');
+                if(!$this->is_not_json($result)){//检查是否报错
+                    return $result;
+                }
                 $class = $this->fix_result($result);
+                if(!$this->is_not_json($class)){//检查是否报错
+                    return $class;
+                }
             }
             $class = $this->info_action($class);
+            if(!$this->is_not_json($class)){//检查是否报错
+                return $class;
+            }
             //echo ($result);
         }
         if(isset($class['borrow_num'])){//若抓到数据
