@@ -266,7 +266,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         if(!$this->is_not_json($post_data)){//检查是否报错
             return $post_data;
         }
-        $result = $this->data($post_data,"http://210.32.205.60/default.aspx",'post',$url);
+        $result = $this->data($post_data,$url,'post',$url);
         $ctr_cookie = 1;
         echo $result;
         return $result;
