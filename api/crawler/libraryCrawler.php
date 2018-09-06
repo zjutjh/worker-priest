@@ -33,8 +33,9 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
      */
     function __construct(){
         $this->__di=new registerCrawler;
-        $this->cookie_file=tempnam('./storage/','cookie');
+        $this->cookie_file=tempnam('../storage/','cookie');
         $this->ctr_cookie=0;
+        //echo $this->cookie_file;
     }
     
     
@@ -108,10 +109,10 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
 
             curl_setopt($ch, CURLOPT_URL, $url);
             if($ctr_cookie==0) {
-                curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie_file);
+                curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);
             }
             else{
-                curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_file);
+                curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);
             }
         }
         else{
@@ -120,10 +121,10 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             curl_setopt($ch,CURLOPT_POSTFIELDS,http_build_query($data, '', '&'));//传入键值对字符串
             
             if($ctr_cookie==0) {//判断是否有cookie
-                curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie_file);//连接时把获得的cookie存为文件
+                curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);//连接时把获得的cookie存为文件
             }
             else{
-                curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_file);//在访问其他页面时拿着这个cookie文件去访问
+                curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);//在访问其他页面时拿着这个cookie文件去访问
             }
         }
         //设置post请求
@@ -138,7 +139,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             exit;
         }
         curl_close($ch);
-        //var_dump($cookie_file);
+        var_dump($this->cookie_file);
         return $file_contents;
     }
     /**
