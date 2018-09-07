@@ -70,7 +70,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
      * 
      */
     public function data( $data,$url,$fun="get",$referer="http://210.32.205.60"){//data是否应该传入引用
-        global $cookie_file,$ctr_cookie;
+        //global $cookie_file,$ctr_cookie;
         //定义请求头
         $browser = array(
         "User-Agent" => "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36",
@@ -108,9 +108,9 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
                 $data = http_build_query($data, '', '&');//对data进行操作
 
             curl_setopt($ch, CURLOPT_URL, $url);
-            if($ctr_cookie==0) {
+            if($this->ctr_cookie==0) {
                 curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);
-                $ctr_cookie=1;
+                $this->ctr_cookie=1;
             }
             else{
                 curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);
@@ -123,7 +123,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             
             if($this->ctr_cookie==0) {//判断是否有cookie
                 curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);//连接时把获得的cookie存为文件
-                //$ctr_cookie=1;
+                $this->ctr_cookie=1;
             }
             else{
                 curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);//在访问其他页面时拿着这个cookie文件去访问
