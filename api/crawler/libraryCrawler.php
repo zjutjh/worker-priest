@@ -111,9 +111,11 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             if($this->ctr_cookie==0) {
                 curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);
                 $this->ctr_cookie=1;
+                echo "makecookie";
             }
             else{
                 curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);
+                echo "sendcookie";
             }
         }
         else{
@@ -124,9 +126,11 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             if($this->ctr_cookie==0) {//判断是否有cookie
                 curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);//连接时把获得的cookie存为文件
                 $this->ctr_cookie=1;
+                echo "post makecookie";
             }
             else{
                 curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);//在访问其他页面时拿着这个cookie文件去访问
+                echo "post sendcookie";
             }
         }
         //设置post请求
