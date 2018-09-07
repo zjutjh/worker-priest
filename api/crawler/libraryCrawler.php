@@ -110,7 +110,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             curl_setopt($ch, CURLOPT_URL, $url);
             if($this->ctr_cookie==0) {
                 curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);
-                $this->ctr_cookie=1;
+                //$this->ctr_cookie=1;
                 echo "makecookie";
             }
             else{
@@ -125,7 +125,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             
             if($this->ctr_cookie==0) {//判断是否有cookie
                 curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);//连接时把获得的cookie存为文件
-                $this->ctr_cookie=1;
+                //$this->ctr_cookie=1;
                 echo "post makecookie";
             }
             else{
@@ -276,6 +276,8 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         }
         $result = $this->data($post_data,$url,'post',$url);
         $this->ctr_cookie = 1;
+        $url = "http://210.32.205.60/login.aspx";
+        $result = $this->data(null,$url);
         echo $result;
         return $result;
     }
