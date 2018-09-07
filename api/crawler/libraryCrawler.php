@@ -62,7 +62,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
      * 并结束程序
      */
     public function is_not_json($str){
-        return is_null(json_decode($str));
+        return is_null(@json_decode($str));
     }
     /**
      * 共用的数据获取函数
@@ -111,11 +111,11 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             if($this->ctr_cookie==0) {
                 curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);
                 //$this->ctr_cookie=1;
-                echo "makecookie";
+                //echo "makecookie\n";
             }
             else{
                 curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);
-                echo "sendcookie";
+                //echo "sendcookie\n";
             }
         }
         else{
@@ -126,11 +126,11 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             if($this->ctr_cookie==0) {//判断是否有cookie
                 curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);//连接时把获得的cookie存为文件
                 //$this->ctr_cookie=1;
-                echo "post makecookie";
+                //echo "post makecookie\n";
             }
             else{
                 curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);//在访问其他页面时拿着这个cookie文件去访问
-                echo "post sendcookie";
+                //echo "post sendcookie\n";
             }
         }
         //设置post请求
@@ -145,7 +145,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             exit;
         }
         curl_close($ch);
-        var_dump($this->cookie_file);
+        //var_dump($this->cookie_file);
         return $file_contents;
     }
     /**
@@ -276,9 +276,10 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
         }
         $result = $this->data($post_data,$url,'post',$url);
         $this->ctr_cookie = 1;
-        $url = "http://210.32.205.60/login.aspx";
+        $url = "http://210.32.205.60/Default.aspx";
         $result = $this->data(null,$url);
-        echo $result;
+        //@unlink($cookie_file);
+	//echo $result;
         return $result;
     }
     /**

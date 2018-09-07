@@ -38,7 +38,7 @@ $http->on('request',function($request,$response){
     else if($request->post!=null){
         $_REQUEST=$request->post;
     }
-    $response->header("Content-Type","text/plain;charset=utf-8");
+    $response->header("Content-Type","text/html;charset=utf-8");
     //$response->end(registerCrawler::$register['libraryCrawler']->data($data,'http://210.32.205.60/login.aspx'));
     $response->end(registerCrawler::$register['libraryCrawler']->login(201706060615,201706060615));
      //$response->end("swooleTEST");
