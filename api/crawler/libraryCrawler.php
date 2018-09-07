@@ -110,6 +110,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             curl_setopt($ch, CURLOPT_URL, $url);
             if($ctr_cookie==0) {
                 curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);
+                $ctr_cookie=1;
             }
             else{
                 curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);
@@ -120,8 +121,9 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch,CURLOPT_POSTFIELDS,http_build_query($data, '', '&'));//传入键值对字符串
             
-            if($ctr_cookie==0) {//判断是否有cookie
+            if($this->ctr_cookie==0) {//判断是否有cookie
                 curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);//连接时把获得的cookie存为文件
+                //$ctr_cookie=1;
             }
             else{
                 curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);//在访问其他页面时拿着这个cookie文件去访问
@@ -176,7 +178,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             else
                 $post_field[$name]=$matches[1];//$matches下标为0位存放的是原字符串
         }
-        var_dump($post_field);
+        //var_dump($post_field);
         return $post_field;
     }
     /**
@@ -237,7 +239,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             }
         }
     }
-    @unlink ($cookie_file);
+    @unlink ($this->cookie_file);
     if($class) {//若抓到数据
         return json_encode( array('status'=>'success','msg'=>$class));
     }
@@ -256,7 +258,8 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
      * @return void
      */
     public function login($username,$passward){
-        global $ctr_cookie;
+        //global $ctr_cookie;
+        
         $url = "http://210.32.205.60/login.aspx";
         $post_field['TextBox1']=$username;
         $post_field['TextBox2']=$passward;
@@ -268,7 +271,7 @@ class libraryCrawler extends BaseCrawler{ //implements CrawlerInterface{
             return $post_data;
         }
         $result = $this->data($post_data,$url,'post',$url);
-        $ctr_cookie = 1;
+        $this->ctr_cookie = 1;
         echo $result;
         return $result;
     }
