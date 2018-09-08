@@ -3,7 +3,7 @@ namespace api\crawler\libraryCrawler;
 use api\crawler\BaseCrawler;
 use api\crawler\registerCrawler;
 
-class library_borrrow extends BaseCrawler{
+class library_borrow extends BaseCrawler{
     /**
      * curl的cookie临时文件
      * ctr_cookie为0表示未设置cookie
