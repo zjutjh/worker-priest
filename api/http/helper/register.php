@@ -3,6 +3,7 @@ namespace api\http\helper;
 use api\crawler\BaseCrawler;
 use api\crawler\cardCrawler;
 use api\crawler\libraryCrawler\library_book;
+use api\crawler\libraryCrawler\library_borrow;
 use api\crawler\ycCrawler;
 use api\crawler\zfCrawler;
 

@@ -10,6 +10,8 @@ return array(
     'api\\crawler\\CrawlerInterFace' => $baseDir . '/crawler/CrawlerInterface.php',
     'api\\crawler\\cardCrawler' => $baseDir . '/crawler/cardCrawler.php',
     'api\\crawler\\libraryCrawler' => $baseDir . '/crawler/libraryCrawler.php',
+    'api\\crawler\\libraryCrawler\\library_book' => $baseDir . '/crawler/libraryCrawler/library_book.php',
+    'api\\crawler\\libraryCrawler\\library_borrrow' => $baseDir . '/crawler/libraryCrawler/library_borrow.php',
     'api\\crawler\\registerCrawler' => $baseDir . '/crawler/registerCrawler.php',
     'api\\crawler\\ycCrawler' => $baseDir . '/crawler/ycCrawler.php',
     'api\\crawler\\zfCrawler' => $baseDir . '/crawler/zfCrawler.php',
