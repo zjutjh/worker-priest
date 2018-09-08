@@ -2,7 +2,7 @@
 namespace api\http\helper;
 use api\crawler\BaseCrawler;
 use api\crawler\cardCrawler;
-use api\crawler\libraryCrawler;
+use api\crawler\libraryCrawler\library_book;
 use api\crawler\ycCrawler;
 use api\crawler\zfCrawler;
 
@@ -14,7 +14,9 @@ use api\crawler\zfCrawler;
 
 $array=[
     "cardCrawler"=>new cardCrawler(),
-    "libraryCrawler"=>new libraryCrawler(),
+    //"libraryCrawler"=>new libraryCrawler(),
+    "library_book"=>new library_book(),
+    "library_borrow"=>new library_borrow(),
     "ycCrawler"=>new ycCrawler(),
     "zfCrawler"=>new zfCrawler()
 ];
