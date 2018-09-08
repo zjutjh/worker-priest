@@ -27,7 +27,7 @@ class library_borrrow extends BaseCrawler{
      * 并结束程序
      * @param string
      */
-    public function is_not_json($str){
+    private function is_not_json($str){
         return is_null(@json_decode($str));
     }
     /**
@@ -36,7 +36,7 @@ class library_borrrow extends BaseCrawler{
      * @param array,string,string
      * @return mixed
      */
-    public function data( $data,$url,$fun="get"){//data是否应该传入引用
+    private function data( $data,$url,$fun="get"){//data是否应该传入引用
         //global $cookie_file,$ctr_cookie;
         //定义请求头
         $browser = array(
@@ -122,7 +122,7 @@ class library_borrrow extends BaseCrawler{
      * @param string,string,mixed,array
      * 
      */
-    public function post_data($post_field,$url,$data = null, $post_field_name=array("__VIEWSTATE","__EVENTTARGET","__EVENTARGUMENT","__VIEWSTATEGENERATOR","__VIEWSTATEENCRYPTED","__EVENTVALIDATION"))
+    private function post_data($post_field,$url,$data = null, $post_field_name=array("__VIEWSTATE","__EVENTTARGET","__EVENTARGUMENT","__VIEWSTATEGENERATOR","__VIEWSTATEENCRYPTED","__EVENTVALIDATION"))
     {
         if($data)
         {
@@ -160,7 +160,7 @@ class library_borrrow extends BaseCrawler{
      * @param array
      * @return void
      */
-    public function login($username,$passward){
+    private function login($username,$passward){
         //global $ctr_cookie;
         
         $url = "http://210.32.205.60/login.aspx";
@@ -184,7 +184,7 @@ class library_borrrow extends BaseCrawler{
     /**
      *借书逻辑
      */
-    public function borrow_action($post_field, $action)
+    private function borrow_action($post_field, $action)
     {
         $url = "http://210.32.205.60/Borrowing.aspx";
         $post_field['ctl00$ScriptManager1']='ctl00$ContentPlaceHolder1$UpdatePanel1|ctl00$ContentPlaceHolder1$GridView1';
@@ -209,7 +209,7 @@ class library_borrrow extends BaseCrawler{
      * 除借书信息外的一些基础信息
      * info_action函数
      */
-    public function info_action($class)
+    private function info_action($class)
     {
         $url = "http://210.32.205.60/Default.aspx";
         $result = $this->data(null,$url);
@@ -234,7 +234,7 @@ class library_borrrow extends BaseCrawler{
      * 将粗糙的前端页面匹配为可用的数据
      * fix_result函数
      */
-    function fix_result($result, $fix_ajax = false)
+    private function fix_result($result, $fix_ajax = false)
     {
         if(preg_match_all("/Object moved to/", $result, $temp)!=0) {
 	        return json_encode( array('status'=>'error','msg'=>'用户名或密码错误'));
