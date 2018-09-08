@@ -25,10 +25,10 @@ $http->on('request',function($request,$response){
     }
     $response->header("Content-Type","application/json;charset=utf-8");
     //$response->end(registerCrawler::$register['libraryCrawler']->data($data,'http://210.32.205.60/login.aspx'));
-    $response->end(registerCrawler::$register[$_REQUEST["type"]]->grab());
+    $response->end(registerCrawler::$register[$request->server["request_uri"]]->grab());
      //$response->end("swooleTEST");
     //$response->end(registerCrawler::$register['libraryCrawler']->book_borrow());
-
+    echo $request->server["request_uri"];
 });
 //Macaw::dispatch();
 ?>
