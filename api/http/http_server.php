@@ -1,7 +1,5 @@
 <?php
 $http = new swoole_http_server("0.0.0.0",9501);
-$workerNum = 10;
-$pool = new Swoole\Process\Pool($workerNum);
 
 require '../public/index.php';
 /*$http->on('request',function($request,$response){
