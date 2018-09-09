@@ -72,16 +72,16 @@ class library_search extends BaseCrawler{
                 $data = http_build_query($data, '', '&');
 
             curl_setopt($ch, CURLOPT_URL, $url);
-            if($ctr_cookie==0)
-                curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie_file);
+            if($this->ctr_cookie==0)
+                curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);
             else
-                curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_file);
+                curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);
         }
         else {
                 curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch,CURLOPT_POSTFIELDS,http_build_query($data, '', '&'));
-            curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_file);
+            curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);
         }
         //设置post请求
         // curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -112,7 +112,7 @@ class library_search extends BaseCrawler{
         }
         else
         {
-            $contents = data('get',null,$url);
+            $contents = $this->data('get',null,$url);
             @unlink($this->cookie_file);
         }
         if(!$this->is_not_json($contents)){//检查是否报错
@@ -153,7 +153,7 @@ class library_search extends BaseCrawler{
         {
             $post_field['ctl00$ScriptManager1']='ctl00$ContentPlaceHolder1$UpdatePanel1|ctl00$ContentPlaceHolder1$AspNetPager1';
             $post_field['ctl00$ContentPlaceHolder1$AspNetPager1_input'] = $page;
-            if(preg_match_all('/<\/table>\|([\w\W]*?)(Quick Search)/', search_book($wd, null, 2), $temp))
+            if(preg_match_all('/<\/table>\|([\w\W]*?)(Quick Search)/', $this->search_book($wd, null, 2), $temp))
             {
                 if(preg_match_all('/\d+\|hiddenField\|([\w\W]*?)\|([\w\W]*?)\|/', $temp[1][0], $t))
                 {
@@ -169,7 +169,7 @@ class library_search extends BaseCrawler{
             $post_field['ctl00$ScriptManager1']='ctl00$ContentPlaceHolder1$UpdatePanel1|ctl00$ContentPlaceHolder1$SearchButton';
             $post_field['ctl00$ContentPlaceHolder1$SearchButton.x']='23';
             $post_field['ctl00$ContentPlaceHolder1$SearchButton.y']='21';
-            $post_field = post_data($post_field,$url);
+            $post_field =$this->post_data($post_field,$url);
             if(!$this->is_not_json($post_field)){//检查是否报错
                 //@unlink($this->cookie_file);
                 //$this->ctr_cookie=0;
@@ -177,7 +177,7 @@ class library_search extends BaseCrawler{
             }
         }
         $post_field["__ASYNCPOST"]='true';
-        $result = data('post',$post_field,$url);
+        $result = $this->data('post',$post_field,$url);
         if(!$this->is_not_json($result)){//检查是否报错
             return $result;
         }
@@ -268,7 +268,7 @@ class library_search extends BaseCrawler{
         {
             $page = null;
         }
-        $class = search_book($_REQUEST['wd'], $page); 
+        $class = $this->search_book($_REQUEST['wd'], $page); 
         if(!$this->is_not_json($class)){//检查是否报错
             @unlink($this->cookie_file);
             $this->ctr_cookie=0;
