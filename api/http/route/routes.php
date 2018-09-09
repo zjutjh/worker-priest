@@ -1,6 +1,6 @@
 <?php
 
-use api\crawler\registerCrawler;
+use http\controller\BaseController;
 //use NoahBuscher\Macaw\Macaw;
 
 /*Macaw::get('/index.php/libraryTEST/data/(:any)',function($Str){
@@ -23,12 +23,9 @@ $http->on('request',function($request,$response){
     else if($request->post!=null){
         $_REQUEST=$request->post;
     }
+    $_SERVER=$request->server;
     $response->header("Content-Type","application/json;charset=utf-8");
-    //$response->end(registerCrawler::$register['libraryCrawler']->data($data,'http://210.32.205.60/login.aspx'));
-    $response->end(registerCrawler::$register[$request->server["request_uri"]]->grab());
-    //$response->end("swooleTEST");
-    //$response->end(registerCrawler::$register['libraryCrawler']->book_borrow());
-    //echo $request->server["request_uri"];
+    $response->end(BaseController::run());
 });
 //Macaw::dispatch();
 ?>

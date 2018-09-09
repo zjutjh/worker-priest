@@ -4,12 +4,13 @@
     },
     "autoload":{
 	"psr-4":{
-	    "api\\crawler\\libraryCrawler\\":"crawler/libraryCrawler/"
+        "api\\crawler\\libraryCrawler\\":"crawler/libraryCrawler/",
+        "http\\controller\\":"http/controller"
 	},
         "classmap": [
             "crawler",
             "crawler/libraryCrawler",
-	    "http/controller"
+	        "http/controller"
         ],
 	    "files": ["http/helper/register.php"]
     }

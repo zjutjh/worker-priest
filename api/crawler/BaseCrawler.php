@@ -4,17 +4,9 @@ use api\crawler\registerCrawler;
 
 class BaseCrawler{
     /**
-     * curl变量
-     * 
-     * @var instance
+     * ioc实例
      */
-    protected $ch;
-    /**
-     * ioc容器
-     * 
-     * @var instance
-     */
-    protected $__di;
+    protected $_di;
     /**
      * 构造函数
      * 
@@ -66,10 +58,10 @@ class BaseCrawler{
     //    array_shift($array);//这个函数删去传入数组的首值，并返回被删掉的那个函数
     //    return call_user_func_array($definition,$array);
     //}
-    public function baseGrab($string,$array){
+    public function baseGrab($string){
         $di=new registerCrawler;
         $instance=$di->get($string);
-        return $instance->grab($array);
+        return $instance->grab();
     }
 }
 ?>
