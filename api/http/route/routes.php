@@ -16,7 +16,7 @@ use http\controller\BaseController;
    // var_dump(registerCrawler::$register['libraryCrawler']->data($data,'http://www.zjut.edu.cn'));
 });*/
 $http->on('request',function($request,$response){
-    var_dump($request->get,$request->post);
+    //var_dump($request->get,$request->post);
     if($request->get!=null){
         $_REQUEST=$request->get;
     }

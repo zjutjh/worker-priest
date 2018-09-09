@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'http\\controller\\' => array($baseDir . '/http/controller'),
     'api\\crawler\\libraryCrawler\\' => array($baseDir . '/crawler/libraryCrawler'),
     'NoahBuscher\\Macaw\\' => array($vendorDir . '/noahbuscher/macaw'),
 );
