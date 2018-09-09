@@ -4,6 +4,7 @@ use api\crawler\BaseCrawler;
 use api\crawler\cardCrawler;
 use api\crawler\libraryCrawler\library_book;
 use api\crawler\libraryCrawler\library_borrow;
+use api\crawler\libraryCrawler\library_search;
 use api\crawler\ycCrawler;
 use api\crawler\zfCrawler;
 
@@ -18,6 +19,7 @@ $array=[
     //"libraryCrawler"=>new libraryCrawler(),
     "/library_book"=>new library_book(),
     "/library_borrow"=>new library_borrow(),
+    "/library_search"=>new library_search(),
     "/ycCrawler"=>new ycCrawler(),
     "/zfCrawler"=>new zfCrawler()
 ];

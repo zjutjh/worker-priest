@@ -131,6 +131,7 @@ class library_borrow extends BaseCrawler{
         else
         {
             $contents = $this->data(null,$url,'get');
+            @unlink($this->cookie_file);
         }
         if(!$this->is_not_json($contents)){//检查是否报错
             return $contents;
@@ -239,7 +240,7 @@ class library_borrow extends BaseCrawler{
         if(preg_match_all("/Object moved to/", $result, $temp)!=0) {
 	        return json_encode( array('status'=>'error','msg'=>'用户名或密码错误'));
             //@unlink ($cookie_file);
-            exit;
+            //exit;
         }
 
         if(preg_match_all('/pic\/NextPage\.png/', $result, $arr)!=0){

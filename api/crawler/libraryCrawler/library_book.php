@@ -131,6 +131,7 @@ class library_book extends BaseCrawler{
         else
         {
             $contents = $this->data(null,$url,'get');
+            @unlink($this->cookie_file);
         }
         if(!$this->is_not_json($contents)){//检查是否报错
             return $contents;
