@@ -10,7 +10,7 @@
         "classmap": [
             "crawler",
             "crawler/libraryCrawler",
-	        "http/controller"
+            "http/controller"
         ],
 	    "files": ["http/helper/register.php"]
     }
