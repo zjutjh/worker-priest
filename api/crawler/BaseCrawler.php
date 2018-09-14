@@ -61,7 +61,10 @@ class BaseCrawler{
     public function baseGrab($string){
         $di=new registerCrawler;
         $instance=$di->get($string);
-        return $instance->grab();
+        if(!is_null(@json_decode($instance))){
+	    return $instance;
+	}
+	return $instance->grab();
     }
 }
 ?>
