@@ -17,7 +17,22 @@
 * 正方/原创系统 成绩明细/班级信息/考试信息查询
 ## 服务类型
 ```
-libraryCrawler:library_book,library_borrow,library_search
+libraryCrawler:
+  1.library/book
+  2.library/borrow
+  3.library/search
+....
+```
+## 参数列表
+```
+libraryCrawler:
+  1.book:
+      (1)wd:书名（关键词）
+      (2)page:翻页操作（第几页）
+  2.borrow:
+      (1)username(2)password
+  3.search:
+      (1)id(书本id号)
 ....
 ```
 ## 调用方式
