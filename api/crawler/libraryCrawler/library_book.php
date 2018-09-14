@@ -108,7 +108,7 @@ class library_book extends BaseCrawler{
         $httpCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);  //判断是否成功登陆
         if($httpCode == 0)
         {
-            return json_encode( array('status'=>'error','msg'=>'服务器错误'));
+            return json_encode( array('code'=>'1','error'=>'服务器错误'));
             exit;
         }
         curl_close($ch);
@@ -162,7 +162,7 @@ class library_book extends BaseCrawler{
         {
             @unlink($this->cookie_file);
             $this->ctr_cookie=0;
-            return json_encode( array('status'=>'error','msg'=>'请输入书本id'));
+            return json_encode( array('code'=>'1','error'=>'请输入书本id'));
         }
         $id = $_REQUEST['id'];
         $result=$this->data(null,'http://210.32.205.60/Book.aspx?id='.$id);
@@ -217,10 +217,10 @@ class library_book extends BaseCrawler{
         @unlink ($this->cookie_file);
         $this->ctr_cookie=0;
         if($class) {//若抓到数据
-            return json_encode( array('status'=>'success','msg'=>$class));
+            return json_encode( array('code'=>'0','data'=>$class));
         }
         else {
-            return json_encode( array('status'=>'error','msg'=>'没有相关信息'));
+            return json_encode( array('code'=>'1','error'=>'没有相关信息'));
         }
 
         //@unlink ($cookie_file);

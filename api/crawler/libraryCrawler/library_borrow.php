@@ -108,7 +108,7 @@ class library_borrow extends BaseCrawler{
         $httpCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);  //判断是否成功登陆
         if($httpCode == 0)
         {
-            return json_encode( array('status'=>'error','msg'=>'服务器错误'));
+            return json_encode( array('code'=>'1','error'=>'服务器错误'));
             exit;
         }
         curl_close($ch);
@@ -238,7 +238,7 @@ class library_borrow extends BaseCrawler{
     private function fix_result($result, $fix_ajax = false)
     {
         if(preg_match_all("/Object moved to/", $result, $temp)!=0) {
-	        return json_encode( array('status'=>'error','msg'=>'用户名或密码错误'));
+	        return json_encode( array('code'=>'0','error'=>'用户名或密码错误'));
             //@unlink ($cookie_file);
             //exit;
         }
@@ -301,7 +301,7 @@ class library_borrow extends BaseCrawler{
         {
             @unlink ($this->cookie_file);
             $this->ctr_cookie=0;
-            return json_encode( array('status'=>'error','msg'=>'参数错误'));
+            return json_encode( array('code'=>'1','error'=>'参数错误'));
             //exit;
         }
         //查询成功，下面开始正则抓取
@@ -344,10 +344,10 @@ class library_borrow extends BaseCrawler{
         @unlink ($this->cookie_file);
         $this->ctr_cookie=0;
         if(isset($class['borrow_num'])){//若抓到数据
-            return json_encode( array('status'=>'success','msg'=>$class));
+            return json_encode( array('code'=>'0','data'=>$class));
         }
         else {//若没有抓到数据
-            return json_encode( array('status'=>'success','msg'=>'没有相关信息'));
+            return json_encode( array('code'=>'1','error'=>'没有相关信息'));
         }
     }
 }
