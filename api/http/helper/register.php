@@ -7,7 +7,7 @@ use api\crawler\libraryCrawler\library_borrow;
 use api\crawler\libraryCrawler\library_search;
 use api\crawler\ycCrawler;
 use api\crawler\zfCrawler;
-use api\crawler\cardCrawler\campus-card;
+use api\crawler\cardCrawler\campus_card;
 use api\crawler\cardCrawler\cardBalance;
 use api\crawler\cardCrawler\cardRecords;
 
@@ -27,7 +27,7 @@ $array=[
     "/zfCrawler"=>new zfCrawler(),
     "/cardBalance"=>new cardBalance(),
     "/cardRecords"=>new cardRecords(),
-    "/campus-card"=>new campus-card()
+    "/campus-card"=>new campus_card()
 ];
 //基类
 $base=new BaseCrawler;
