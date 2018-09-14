@@ -226,7 +226,7 @@ class library_borrow extends BaseCrawler{
         }
 
         if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_LBqk[\w\W]*?>([\w\W]*?)<\/span>/', $result, $arr)!=0){
-            $class['debet'] = (int)trim($arr[1][0]);
+            $class['debet'] = (double)trim($arr[1][0]);
         }
 
         return $class;

@@ -27,11 +27,16 @@ class registerCrawler{
      * @return instance
      */
     public function get($name){
-        if (isset(self::$register[$name])){ 
-            return self::$register[$name];
+        try{
+            if (isset(self::$register[$name])){ 
+                return self::$register[$name];
+            }
+            else{
+                throw new Exception("Service '" . $name . "' wasn't found in the dependency injection container'");
+            }
         }
-        else{
-            throw new Exception("Service '" . $name . "' wasn't found in the dependency injection container'");
+        catch(Exception $e){
+            return json_encode( array('code'=>1,'error'=>'404'));
         }
         /*if(is_object($instance=call_user_func($definition))){
             return $instance;//通过这个函数使用闭包函数
