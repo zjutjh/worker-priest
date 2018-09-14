@@ -175,7 +175,7 @@ class library_book extends BaseCrawler{
         //<table style="border-style: none;
         $preg = '/<table cellspacing="0" cellpadding="0" border="0" [\w\W]*?>([\w\W]*?)<\/table>/';
         if(preg_match_all('/<iframe id="ctl00_ContentPlaceHolder1_DuXiuImage"[\w\W]*?src="([\w\W]*?)">/', $result, $arr)!=0){//若抓到数据
-            $class['coverIframe'] = ($arr[1][0]);
+            $class['coverIframe'] = htmlspecialchars_decode($arr[1][0]);
         }
         if(preg_match_all($preg, $result, $arr)!=0){//若抓到数据
             if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_DetailsView1_Label[\w\W]*?">([\w\W]*?)<\/span>/', $arr[0][0], $temp)!=0){
