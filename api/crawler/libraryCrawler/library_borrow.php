@@ -108,8 +108,8 @@ class library_borrow extends BaseCrawler{
         $httpCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);  //判断是否成功登陆
         if($httpCode == 0)
         {
-            return json_encode( array('code'=>'1','error'=>'服务器错误'));
-            exit;
+            return json_encode( array('code'=>1,'error'=>'服务器错误'));
+            //exit;
         }
         curl_close($ch);
         //var_dump($this->cookie_file);
@@ -218,15 +218,15 @@ class library_borrow extends BaseCrawler{
             return $result;
         }
         if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_LBnowborrow[\w\W]*?>([\w\W]*?)<\/span>/', $result, $arr)!=0){
-            $class['borrow_num'] = trim($arr[1][0]);
+            $class['num'] = (int)trim($arr[1][0]);
         }
 
         if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_LBcq[\w\W]*?>([\w\W]*?)<\/span>/', $result, $arr)!=0){
-            $class['overdue'] = trim($arr[1][0]);
+            $class['overdue'] = (int)trim($arr[1][0]);
         }
 
         if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_LBqk[\w\W]*?>([\w\W]*?)<\/span>/', $result, $arr)!=0){
-            $class['debet'] = trim($arr[1][0]);
+            $class['debet'] = (int)trim($arr[1][0]);
         }
 
         return $class;
@@ -238,37 +238,37 @@ class library_borrow extends BaseCrawler{
     private function fix_result($result, $fix_ajax = false)
     {
         if(preg_match_all("/Object moved to/", $result, $temp)!=0) {
-	        return json_encode( array('code'=>'0','error'=>'用户名或密码错误'));
+	        return json_encode( array('code'=>1,'error'=>'用户名或密码错误'));
             //@unlink ($cookie_file);
             //exit;
         }
 
         if(preg_match_all('/pic\/NextPage\.png/', $result, $arr)!=0){
-            $class['has_next'] = true;
+            $class['hasNext'] = true;
         }
 
         if(preg_match_all('/pic\/PrePage\.png/', $result, $arr)!=0){
-            $class['has_pre'] = true;
+            $class['hasPre'] = true;
         }
         
-        $class['borrow_list'] = array();
+        $class['list'] = array();
 
         if(preg_match_all('/<table\s*style="border-style: none;[\w\W]*?>([\w\W]*?)\s*<\/table>/', $result, $arr)!=0){//若抓到数据
             //var_dump($arr);
             foreach ($arr[1] as $key => $value) {
                 if(preg_match_all('/<a id="ctl00_ContentPlaceHolder1_GridView1[\w\W]*?href="Book.aspx\?id=([\d]*?)"[\w\W]*?>([\w\W]*?)<\/a>/', $value, $temp)!=0) {
-                    $borrow['bookid'] = $temp[1][0];
+                    $borrow['id'] = $temp[1][0];
                     $borrow['title'] = $temp[2][0];
                 }
                 if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_GridView1[\w\W]*?>([\w\W]*?)<\/span>/', $value, $temp)!=0) {
                     // var_dump($temp);
-                    $borrow['collection_code'] = $temp[1][0];
-                    $borrow['collection_address'] = $temp[1][1];
-                    $borrow['borrow_date'] = $temp[1][2];
-                    $borrow['return_date'] = $temp[1][3];
+                    $borrow['collectionCode'] = $temp[1][0];
+                    $borrow['collectionAddress'] = $temp[1][1];
+                    $borrow['borrowDate'] = $temp[1][2];
+                    $borrow['returnDate'] = $temp[1][3];
                     $borrow['renew'] = $temp[1][4];
                     $borrow['status'] = $temp[1][5];
-                    $class['borrow_list'][] = $borrow;
+                    $class['list'][] = $borrow;
                 }
             }
         }
@@ -301,7 +301,7 @@ class library_borrow extends BaseCrawler{
         {
             @unlink ($this->cookie_file);
             $this->ctr_cookie=0;
-            return json_encode( array('code'=>'1','error'=>'参数错误'));
+            return json_encode( array('code'=>1,'error'=>'参数错误'));
             //exit;
         }
         //查询成功，下面开始正则抓取
@@ -343,11 +343,11 @@ class library_borrow extends BaseCrawler{
         }
         @unlink ($this->cookie_file);
         $this->ctr_cookie=0;
-        if(isset($class['borrow_num'])){//若抓到数据
-            return json_encode( array('code'=>'0','data'=>$class));
+        if(isset($class['num'])){//若抓到数据
+            return json_encode( array('code'=>0,'data'=>$class));
         }
         else {//若没有抓到数据
-            return json_encode( array('code'=>'1','error'=>'没有相关信息'));
+            return json_encode( array('code'=>1,'error'=>'没有相关信息'));
         }
     }
 }

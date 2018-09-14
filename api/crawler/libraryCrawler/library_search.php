@@ -92,7 +92,7 @@ class library_search extends BaseCrawler{
         curl_close($ch);
         if($httpCode == 0)
         {
-            return json_encode( array('code'=>'1','error'=>'服务器错误'));
+            return json_encode( array('code'=>1,'error'=>'服务器错误'));
         }
         //curl_close($ch);
         // var_dump($cookie_file);
@@ -216,33 +216,33 @@ class library_search extends BaseCrawler{
             foreach ($arr[1] as $key => $value) {
                 if(preg_match_all('/<a id="ctl00_ContentPlaceHolder1[\w\W]*?#3366CC;">([\w\W]*?)<\/a>/', $value, $title))
                 {
-                    $class['book_list'][$key]['title'] = strip_tags($title[1][0]);//去除html标记
+                    $class['list'][$key]['title'] = strip_tags($title[1][0]);//去除html标记
                 }
                 if(preg_match_all('/<a id="ctl00_ContentPlaceHolder1[\w\W]*?href="[\w\W]*?([\d]*?)"[\w\W]*?<\/a>/', $value, $title))
                 {
-                    $class['book_list'][$key]['bookid'] = strip_tags($title[1][0]);
+                    $class['list'][$key]['id'] = strip_tags($title[1][0]);
                 }
                 if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1[\w\W]*?#000000">([\w\W]*?)<\/span>/', $value, $book_info))
                 {
-                    $class['book_list'][$key]['call_number'] = strip_tags($book_info[1][0]);
-                    $class['book_list'][$key]['author'] = strip_tags($book_info[1][1]);
-                    $class['book_list'][$key]['publisher'] = strip_tags($book_info[1][2]);
-                    $class['book_list'][$key]['publish_date'] = strip_tags($book_info[1][3]);
-                    $class['book_list'][$key]['topic'] = strip_tags($book_info[1][4]);
-                    $class['book_list'][$key]['language'] = strip_tags($book_info[1][5]);
+                    $class['list'][$key]['callNumber'] = strip_tags($book_info[1][0]);
+                    $class['list'][$key]['author'] = strip_tags($book_info[1][1]);
+                    $class['list'][$key]['publisher'] = strip_tags($book_info[1][2]);
+                    $class['list'][$key]['publishDate'] = strip_tags($book_info[1][3]);
+                    $class['list'][$key]['topic'] = strip_tags($book_info[1][4]);
+                    $class['list'][$key]['language'] = strip_tags($book_info[1][5]);
                 }
 
             }
             
             if(empty($class)==TRUE) {
-                return json_encode( array('code'=>'1','error'=>'没有相关信息'));
+                return json_encode( array('code'=>1,'error'=>'没有相关信息'));
             }
             else {
                 return $class;
             }
         }
         else {//若没有抓到数据
-            return json_encode( array('code'=>'1','error'=>'没有相关信息'));
+            return json_encode( array('code'=>1,'error'=>'没有相关信息'));
         }
     }
     /**
@@ -254,7 +254,7 @@ class library_search extends BaseCrawler{
         {
             @unlink($this->cookie_file);
             $this->ctr_cookie=0;
-            return json_encode( array('code'=>'1','error'=>'请输入关键词'));
+            return json_encode( array('code'=>1,'error'=>'请输入关键词'));
             //exit;
         }
 
@@ -277,12 +277,12 @@ class library_search extends BaseCrawler{
         if($class){//若抓到数据
             @unlink($this->cookie_file);
             $this->ctr_cookie=0;
-            return json_encode( array('code'=>'0','data'=>$class));
+            return json_encode( array('code'=>0,'data'=>$class));
         }
         else {//若没有抓到数据
             @unlink($this->cookie_file);
             $this->ctr_cookie=0;
-            return json_encode( array('code'=>'1','error'=>'没有相关信息'));
+            return json_encode( array('code'=>1,'error'=>'没有相关信息'));
         }
         //@unlink ($cookie_file);
     }

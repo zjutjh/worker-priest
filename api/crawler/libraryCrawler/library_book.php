@@ -108,8 +108,8 @@ class library_book extends BaseCrawler{
         $httpCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);  //判断是否成功登陆
         if($httpCode == 0)
         {
-            return json_encode( array('code'=>'1','error'=>'服务器错误'));
-            exit;
+            return json_encode( array('code'=>1,'error'=>'服务器错误'));
+            //exit;
         }
         curl_close($ch);
         //var_dump($this->cookie_file);
@@ -162,7 +162,7 @@ class library_book extends BaseCrawler{
         {
             @unlink($this->cookie_file);
             $this->ctr_cookie=0;
-            return json_encode( array('code'=>'1','error'=>'请输入书本id'));
+            return json_encode( array('code'=>1,'error'=>'请输入书本id'));
         }
         $id = $_REQUEST['id'];
         $result=$this->data(null,'http://210.32.205.60/Book.aspx?id='.$id);
@@ -175,7 +175,7 @@ class library_book extends BaseCrawler{
         //<table style="border-style: none;
         $preg = '/<table cellspacing="0" cellpadding="0" border="0" [\w\W]*?>([\w\W]*?)<\/table>/';
         if(preg_match_all('/<iframe id="ctl00_ContentPlaceHolder1_DuXiuImage"[\w\W]*?src="([\w\W]*?)">/', $result, $arr)!=0){//若抓到数据
-            $class['cover_iframe'] = ($arr[1][0]);
+            $class['coverIframe'] = ($arr[1][0]);
         }
         if(preg_match_all($preg, $result, $arr)!=0){//若抓到数据
             if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_DetailsView1_Label[\w\W]*?">([\w\W]*?)<\/span>/', $arr[0][0], $temp)!=0){
@@ -183,13 +183,13 @@ class library_book extends BaseCrawler{
                 $class['series'] = $temp[1][1];
                 $class['author'] = $temp[1][2];
                 $class['ISBN'] = $temp[1][3];
-                $class['call_number'] = $temp[1][4];
-                $class['call_type'] = $temp[1][5];
+                $class['callNumber'] = $temp[1][4];
+                $class['callType'] = $temp[1][5];
                 $class['price'] = $temp[1][6];
-                $class['publish_location'] = $temp[1][7];
+                $class['publishLocation'] = $temp[1][7];
                 $class['topic'] = $temp[1][8];
                 $class['type'] = $temp[1][9];
-                $class['publish_date'] = $temp[1][10];
+                $class['publishDate'] = $temp[1][10];
                 $class['publisher'] = $temp[1][11];
             }
 
@@ -199,17 +199,17 @@ class library_book extends BaseCrawler{
                 foreach ($temp[1] as $key => $value) {
                     if(preg_match_all('/<td align="center" style="color:[\w\W]*?>([\w\W]*?)<\/td>/', $value, $temp2)!=0){
                         if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_GridView1[\w\W]*?>([\w\W]*?)<\/span>/', $value, $temp3)!=0) {
-                            $book_status['collection_address'] = $temp3[1][0];
-                            $book_status['collection_location'] = $temp3[1][1];
+                            $book_status['collectionAddress'] = $temp3[1][0];
+                            $book_status['collectionLocation'] = $temp3[1][1];
                         }
                         $book_status['barcode'] = $temp2[1][0];
-                        $book_status['collection_code'] = trim(html_entity_decode($temp2[1][1]));
-                        $book_status['borrow_date'] = trim(html_entity_decode($temp2[1][2]));
-                        $book_status['return_date'] = trim(html_entity_decode($temp2[1][3]));
+                        $book_status['collectionCode'] = trim(html_entity_decode($temp2[1][1]));
+                        $book_status['borrowDate'] = trim(html_entity_decode($temp2[1][2]));
+                        $book_status['returnDate'] = trim(html_entity_decode($temp2[1][3]));
                         if(preg_match_all('/<span id="ctl00_ContentPlaceHolder1_GridView[\w\W]*?>([\w\W]*?)<\/span>/', $temp2[1][4], $temp3)!=0) {
                             $book_status['status'] = $temp3[1][0];
                         }
-                        $class['book_status_list'][] = $book_status;
+                        $class['bookStatusList'][] = $book_status;
                     }
                 }
             }
@@ -217,10 +217,10 @@ class library_book extends BaseCrawler{
         @unlink ($this->cookie_file);
         $this->ctr_cookie=0;
         if($class) {//若抓到数据
-            return json_encode( array('code'=>'0','data'=>$class));
+            return json_encode( array('code'=>0,'data'=>$class));
         }
         else {
-            return json_encode( array('code'=>'1','error'=>'没有相关信息'));
+            return json_encode( array('code'=>1,'error'=>'没有相关信息'));
         }
 
         //@unlink ($cookie_file);
