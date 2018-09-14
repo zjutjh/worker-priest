@@ -8,5 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'http\\controller\\' => array($baseDir . '/http/controller'),
     'api\\crawler\\libraryCrawler\\' => array($baseDir . '/crawler/libraryCrawler'),
+    'api\\crawler\\cardCrawler\\' => array($baseDir . '/crawler/cardCrawler'),
     'NoahBuscher\\Macaw\\' => array($vendorDir . '/noahbuscher/macaw'),
 );

@@ -4,7 +4,7 @@ namespace api\crawler\cardCrawler;
 use api\crawler\BaseCrawler;
 use api\crawler\registerCrawler;
 
-include_once('./simple_html_dom.php');
+//include_once('./simple_html_dom.php');
 class campus_card extends BaseCrawler{
     /**
      * curl变量
