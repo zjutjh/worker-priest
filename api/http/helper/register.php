@@ -20,9 +20,9 @@ use api\crawler\cardCrawler\cardRecords;
 $array=[
     "/cardCrawler"=>new cardCrawler(),
     //"libraryCrawler"=>new libraryCrawler(),
-    "/library_book"=>new library_book(),
-    "/library_borrow"=>new library_borrow(),
-    "/library_search"=>new library_search(),
+    "/library/book"=>new library_book(),
+    "/library/borrow"=>new library_borrow(),
+    "/library/search"=>new library_search(),
     "/ycCrawler"=>new ycCrawler(),
     "/zfCrawler"=>new zfCrawler(),
     "/cardBalance"=>new cardBalance(),
