@@ -11,12 +11,8 @@
         "classmap": [
             "crawler",
             "crawler/libraryCrawler",
-<<<<<<< HEAD
             "http/controller",
             "crawler/cardCrawler"
-=======
-            "http/controller"
->>>>>>> 71c583a5fe9d5617875c6f75825149e6ab3e2c66
         ],
 	    "files": ["http/helper/register.php"]
     }
