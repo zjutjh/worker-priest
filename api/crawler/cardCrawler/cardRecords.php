@@ -4,8 +4,8 @@ namespace api\crawler\cardCrawler;
 use api\crawler\BaseCrawler;
 use api\crawler\registerCrawler;
 
-include_once('./simple_html_dom.php');
-class cardBalance extends BaseCrawler{
+//include_once('./simple_html_dom.php');
+class cardRecords extends BaseCrawler{
     /**
      * curl变量
      * 
