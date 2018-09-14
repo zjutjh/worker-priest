@@ -5,12 +5,14 @@
     "autoload":{
 	"psr-4":{
         "api\\crawler\\libraryCrawler\\":"crawler/libraryCrawler/",
-        "http\\controller\\":"http/controller"
+        "http\\controller\\":"http/controller/",
+        "api\\crawler\\cardCrawler\\":"crawler/cardCrawler/"
 	},
         "classmap": [
             "crawler",
             "crawler/libraryCrawler",
-	        "http/controller"
+            "http/controller",
+            "crawler/cardCrawler"
         ],
 	    "files": ["http/helper/register.php"]
     }
