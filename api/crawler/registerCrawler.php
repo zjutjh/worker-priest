@@ -32,10 +32,11 @@ class registerCrawler{
                 return self::$register[$name];
             }
             else{
+                trigger_error("404", E_USER_ERROR);
                 throw new Exception("Service '" . $name . "' wasn't found in the dependency injection container'");
             }
         }
-        catch(Exception $e){
+        catch(Throwable $e){
             return json_encode( array('code'=>1,'error'=>'404'));
         }
         /*if(is_object($instance=call_user_func($definition))){
