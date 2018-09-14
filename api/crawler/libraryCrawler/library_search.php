@@ -92,7 +92,7 @@ class library_search extends BaseCrawler{
         curl_close($ch);
         if($httpCode == 0)
         {
-            return json_encode( array('code'=>'0','error'=>'服务器错误'));
+            return json_encode( array('code'=>'1','error'=>'服务器错误'));
         }
         //curl_close($ch);
         // var_dump($cookie_file);
@@ -205,7 +205,7 @@ class library_search extends BaseCrawler{
                 if($temp[1][0] == "0")
                 {
                     @unlink ($this->cookie_file);
-                    return json_encode( array('code'=>'0','error'=>'没有你想要的图书'));
+                    return json_encode( array('code'=>'1','error'=>'没有你想要的图书'));
                 }
                 else
                 {
@@ -235,14 +235,14 @@ class library_search extends BaseCrawler{
             }
             
             if(empty($class)==TRUE) {
-                return json_encode( array('code'=>'0','error'=>'没有相关信息'));
+                return json_encode( array('code'=>'1','error'=>'没有相关信息'));
             }
             else {
                 return $class;
             }
         }
         else {//若没有抓到数据
-            return json_encode( array('code'=>'0','error'=>'没有相关信息'));
+            return json_encode( array('code'=>'1','error'=>'没有相关信息'));
         }
     }
     /**
@@ -254,7 +254,7 @@ class library_search extends BaseCrawler{
         {
             @unlink($this->cookie_file);
             $this->ctr_cookie=0;
-            return json_encode( array('code'=>'0','error'=>'请输入关键词'));
+            return json_encode( array('code'=>'1','error'=>'请输入关键词'));
             //exit;
         }
 
@@ -277,12 +277,12 @@ class library_search extends BaseCrawler{
         if($class){//若抓到数据
             @unlink($this->cookie_file);
             $this->ctr_cookie=0;
-            return json_encode( array('code'=>'1','data'=>$class));
+            return json_encode( array('code'=>'0','data'=>$class));
         }
         else {//若没有抓到数据
             @unlink($this->cookie_file);
             $this->ctr_cookie=0;
-            return json_encode( array('code'=>'0','error'=>'没有相关信息'));
+            return json_encode( array('code'=>'1','error'=>'没有相关信息'));
         }
         //@unlink ($cookie_file);
     }
