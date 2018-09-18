@@ -63,7 +63,7 @@ class BaseCrawler{
         $instance=$di->get($string);
         if(!is_null(@json_decode($instance))){
 	    return $instance;
-	}
+	    }
 	return $instance->grab();
     }
 }

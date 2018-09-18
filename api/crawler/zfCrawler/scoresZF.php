@@ -92,7 +92,7 @@ class scoresZF extends BaseCrawler{
         curl_close($ch);
         if($httpCode == 0)
         {
-            return json_encode( array('code'=>'1','error'=>'服务器错误'));
+            return json_encode( array('code'=>1,'error'=>'服务器错误'));
         }
         // var_dump($cookie_file);
         return $file_contents;
@@ -132,17 +132,17 @@ class scoresZF extends BaseCrawler{
         {
             @unlink ($cookie_file);
             $this->ctr_cookie=0;
-            return  json_encode( array('status'=>'error','msg'=>'参数错误'));
-            exit;
+            return  json_encode( array('code'=>1,'error'=>'参数错误'));
+            //exit;
         }
         $username = $_REQUEST['username'];
         $password = $_REQUEST['password'];
-        $url = $root . 'xtgl/login_getPublicKey.html?time=' . (time() * 1000);
-        $publicKeyData = json_decode(data('get',null, $url), true);
-        $ctr_cookie=1;
+        $url = $root . 'xtgl/login_getPublicKey.html?time=' . (time() * 1000);//公钥
+        $publicKeyData = json_decode(data('get',null, $url), true);//要数据类型的数据，加参数true
+        $this->ctr_cookie=1;//请求公钥时会返回cookie
         $exponent = $publicKeyData['exponent'];
         $modules = $publicKeyData['modulus'];
-        $output = data('get', null, 'http://weixin.zjut.edu.cn:3000?' . http_build_query(array(
+        $output = data('get', null, 'http://weixin.zjut.imcr.me:3000?' . http_build_query(array(
             'password' => $password,
             'exponent' => $exponent,
             'modules' => $modules

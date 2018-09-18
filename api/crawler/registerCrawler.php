@@ -31,8 +31,8 @@ class registerCrawler{
             return self::$register[$name];
         }
         else{
-	    //$response->status('404');
-	    return json_encode( array('code'=>1,'error'=>'404'));
+	        //$response->status('404');
+	        return json_encode( array('code'=>1,'error'=>'404'));
             //trigger_error("404", E_USER_ERROR);
             //throw new Exception("Service '" . $name . "' wasn't found in the dependency injection container'");
         }

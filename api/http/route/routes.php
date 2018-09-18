@@ -27,8 +27,8 @@ $http->on('request',function($request,$response){
     $response->header("Content-Type","application/json;charset=utf-8");
     $httpCode=json_encode(array('code'=>1,'error'=>'404'));
     if(BaseController::run()==$httpCode){
-	$response->status("404");
-	$response->end($httpCode); 
+	    $response->status("404");
+	    $response->end($httpCode);
     }
     $response->end(BaseController::run());
 });
