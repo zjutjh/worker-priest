@@ -2,7 +2,6 @@
 $http = new swoole_http_server("0.0.0.0",9501);
 
 $http->set(array(
-	'task_worker_num' => 4,
 	'worker_num' => 4,
 	'daemonize' => 1,
 	'log_file' => '../storage/http_server.log',
