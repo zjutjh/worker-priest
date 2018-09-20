@@ -144,7 +144,7 @@ class scoresZF extends BaseCrawler{
         $modules = $publicKeyData['modulus'];
         //rsa算法接口
         //http://weixin.zjut.imcr.me:3000?
-        $output = data('get', null, 'http://120.79.49.81:3000?' . http_build_query(array(
+        $output =$this->data('get', null, 'http://120.79.49.81:3000?' . http_build_query(array(
             'password' => $password,
             'exponent' => $exponent,
             'modules' => $modules
@@ -159,7 +159,7 @@ class scoresZF extends BaseCrawler{
         while(!$isRightCapcha) {
             // 开始验证码识别
             $url = $root . '/kaptcha';
-            $captcha = data('get', null, $url);
+            $captcha =$this->data('get', null, $url);
             $image_base64 = 'data:image/jpeg;base64,' . base64_encode($captcha);
             $tensorUrl = 'http://172.16.32.50/yzm';
             $tensorResult = json_decode(data('post', array(
@@ -170,7 +170,7 @@ class scoresZF extends BaseCrawler{
         
             $url = $root."xtgl/login_slogin.html";
             //$url="http://172.16.7.86///logon.aspx";
-            $result = data('post',$post_field, $url);
+            $result =$this->data('post',$post_field, $url);
             if(preg_match_all('/验证码输入错误/', $result, $arr)!=0){
                 function create_uuid($prefix = ""){    //可以指定前缀
                     $str = md5(uniqid(mt_rand(), true));   
@@ -214,7 +214,7 @@ class scoresZF extends BaseCrawler{
         	'12' => '2',
         	'16' => '短'
         );
-        $res = data('post', array(
+        $res =$this->data('post', array(
             "xnm"=>$year,
             "xqm"=>$term,
             "queryModel.showCount"=>"150"
