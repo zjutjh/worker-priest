@@ -142,7 +142,9 @@ class scoresZF extends BaseCrawler{
         $this->ctr_cookie=1;//请求公钥时会返回cookie
         $exponent = $publicKeyData['exponent'];
         $modules = $publicKeyData['modulus'];
-        $output = data('get', null, 'http://weixin.zjut.imcr.me:3000?' . http_build_query(array(
+        //rsa算法接口
+        //http://weixin.zjut.imcr.me:3000?
+        $output = data('get', null, 'http://120.79.49.81:3000?' . http_build_query(array(
             'password' => $password,
             'exponent' => $exponent,
             'modules' => $modules
@@ -189,14 +191,14 @@ class scoresZF extends BaseCrawler{
         }
 
         if(preg_match_all('/用户名或密码不正确，请重新输入/', $result, $arr)!=0){
-            echo json_encode( array('status'=>'error','msg'=> '用户名或密码错误'));
             @unlink ($cookie_file);
-            exit;
+            $this->ctr_cookie;
+            return json_encode( array('code'=>'1','error'=> '用户名或密码错误'));
         }
         if ($result !== "") {
-            echo json_encode( array('status'=>'error','msg'=> '服务器错误'));
             @unlink ($cookie_file);
-            exit;
+            $this->ctr_cookie=0;
+            return json_encode( array('code'=>'1','error'=> '服务器错误'));
         }
 
         // 登陆成功，接下来获取成绩
@@ -229,11 +231,12 @@ class scoresZF extends BaseCrawler{
             unset($result['items'][$key]['queryModel']);
             unset($result['items'][$key]['userModel']);
         }
-        echo json_encode(array(
-            'status' => 'success',
-            'msg' => $result['items']
-        ));
         @unlink ($cookie_file);
+        $this->ctr_cookie=0;
+        return json_encode(array(
+            'code' => '0',
+            'data' => $result['items']
+        ));
     }
 }
 ?>

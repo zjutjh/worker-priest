@@ -6,13 +6,14 @@
 	"psr-4":{
         "api\\crawler\\libraryCrawler\\":"crawler/libraryCrawler/",
         "http\\controller\\":"http/controller/",
-        "api\\crawler\\cardCrawler\\":"crawler/cardCrawler/"
-	},
+        "api\\crawler\\cardCrawler\\":"crawler/cardCrawler/",
+        "api\\crawler\\zfCrawler\\":"crawler/zfCrawler"
+    },
         "classmap": [
-            "crawler",
             "crawler/libraryCrawler",
             "http/controller",
-            "crawler/cardCrawler"
+            "crawler/cardCrawler",
+            "crawler/zfCrawler"
         ],
 	    "files": ["http/helper/register.php"]
     }
