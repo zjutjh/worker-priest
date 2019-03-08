@@ -26,12 +26,12 @@ libraryCrawler:
 ## 参数列表
 ```
 libraryCrawler:
-  1.book:
+  1.search:
       (1)wd:书名（关键词）
       (2)page:翻页操作（第几页）
   2.borrow:
       (1)username(2)password
-  3.search:
+  3.book:
       (1)id(书本id号)
 ....
 ```
